@@ -1,0 +1,16 @@
+86.0
+
+ptime 1.0 for Win32, Freeware - http://www.pc-tools.net/
+Copyright(C) 2002, Jem Berkes <jberkes@pc-tools.net>
+
+===  python pairedAlignment.py fasta_test5.fasta fasta_test5_2.fasta" ===
+
+Execution time: 0.515 s
+175.0
+
+ptime 1.0 for Win32, Freeware - http://www.pc-tools.net/
+Copyright(C) 2002, Jem Berkes <jberkes@pc-tools.net>
+
+===  python pairedAlignment.py fasta_test6.fasta fasta_test6_2.fasta" ===
+
+Execution time: 0.688 s
