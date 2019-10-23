@@ -103,15 +103,15 @@ def dc3(cad):
         if(thr[0]!=lastThr[0]):
             currentRank=currentRank+1
             tableRankThriple.append((thr,currentRank))
-            b12IndexRank[thr[1]]=currentRank
+            b12IndexRank[str(thr[1])]=currentRank
         else:
             tableRankThriple.append((thr,currentRank))
-            b12IndexRank[thr[1]]=currentRank
+            b12IndexRank[str(thr[1])]=currentRank
             duplicates=True
         lastThr=thr
-    b12IndexRank[len(cad)]=0
-    b12IndexRank[len(cad)+1]=0
-    b12IndexRank[len(cad)+2]=0
+    b12IndexRank[str(len(cad))]=0
+    b12IndexRank[str(len(cad)+1)]=0
+    b12IndexRank[str(len(cad)+2)]=0
     print("-----")
     print("-----")
     print("--Table Rank thriple--")
@@ -127,7 +127,7 @@ def dc3(cad):
         for i in range(0,len(b12)+2):
             try:
                 print(b12[i][1])
-                newArray[i]=b12IndexRank[b12[i][1]]
+                newArray[i]=b12IndexRank[str(b12[i][1])]
             except Exception as e:
                 #print(e)
                 print(i)
@@ -148,15 +148,28 @@ def dc3(cad):
         print("returned")
         print(recReturn)
 
+        print("dict",b12IndexRank)
 
-            
+        sortedB12=[0]*len(b12)
+        for i in range(1,len(recReturn)):
+            b12Val=b12[recReturn[i]]
+            sortedB12[i-1]=b12Val
+
+        print("sortedB12",sortedB12)
+        for i in range(0,len(sortedB12)):
+            b12IndexRank[str(sortedB12[i])]=i+1
+
+
+
+        print(b12IndexRank) 
         print("---b0---")
         print(b0)
         for b in b0:
-            intB=b12IndexRank[(b[1]+1)]
+            intB=b12IndexRank[str((b[1]+1))]
             stringB=str(intB)
             #b0Tuples.append(int(stringB+str(b[0])))
             #b0Tuples2.append((intB,b[0]))
+            #print(stringB)
             b0Tuples21.append((int(stringB+str(b[0])),((intB,b[0]),b[1])))
         #radix.radixSort(b0Tuples)
         #radix.radixSortTuple(b0Tuples2)
@@ -198,8 +211,8 @@ def dc3(cad):
                             result.append(idxB0)
                             idx=idx+1
                         else:
-                            rankB0P2=b12IndexRank[idxB0+2]
-                            rankB12P2=b12IndexRank[idxB12+2]
+                            rankB0P2=b12IndexRank[str(idxB0+2)]
+                            rankB12P2=b12IndexRank[str(idxB12+2)]
                             if(rankB0P2>rankB12P2):
                                 result.append(idxB12)
                                 idx2=idx2+1
@@ -222,8 +235,8 @@ def dc3(cad):
                         result.append(idxB0)
                         idx=idx+1
                     else:
-                        rankB0P1=b12IndexRank[idxB0+1]
-                        rankB12P1=b12IndexRank[idxB12+1]
+                        rankB0P1=b12IndexRank[str(idxB0+1)]
+                        rankB12P1=b12IndexRank[str(idxB12+1)]
                         print("rankB0-rankrB12",rankB0P1,rankB12P1)
                         if(rankB0P1>rankB12P1):
                             result.append(idxB12)
@@ -258,7 +271,7 @@ def dc3(cad):
         print("---b0---")
         print(b0)
         for b in b0:
-            intB=b12IndexRank[(b[1]+1)]
+            intB=b12IndexRank[str((b[1]+1))]
             stringB=str(intB)
             #b0Tuples.append(int(stringB+str(b[0])))
             #b0Tuples2.append((intB,b[0]))
@@ -304,8 +317,8 @@ def dc3(cad):
                             result.append(idxB0)
                             idx=idx+1
                         else:
-                            rankB0P2=b12IndexRank[idxB0+2]
-                            rankB12P2=b12IndexRank[idxB12+2]
+                            rankB0P2=b12IndexRank[str(idxB0+2)]
+                            rankB12P2=b12IndexRank[str(idxB12+2)]
                             if(rankB0P2>rankB12P2):
                                 result.append(idxB12)
                                 idx2=idx2+1
@@ -328,8 +341,8 @@ def dc3(cad):
                         result.append(idxB0)
                         idx=idx+1
                     else:
-                        rankB0P1=b12IndexRank[idxB0+1]
-                        rankB12P1=b12IndexRank[idxB12+1]
+                        rankB0P1=b12IndexRank[str(idxB0+1)]
+                        rankB12P1=b12IndexRank[str(idxB12+1)]
                         print("rankB0-rankrB12",rankB0P1,rankB12P1)
                         if(rankB0P1>rankB12P1):
                             result.append(idxB12)
