@@ -1,12 +1,13 @@
 import radix
 
+specialChar='0'
+
 def dc3(cad):
     #cadena
     print("--------Cadena--------")
     print("--------Cadena--------",cad)
     print("--------Cadena--------")
     #construcción de alfabeto
-
     
     alf=[]
     for c in cad:
@@ -36,8 +37,8 @@ def dc3(cad):
     for c in cad:
         print(c)
         alfCad.append(alfDict[c])
+    alfCad.append(0)
     print(alfCad)
-
 
     #Crear sample set / b0
 
@@ -63,18 +64,19 @@ def dc3(cad):
     thriples=[]
     for b in b12:
         thriple=[]
-        try:
-            for i in range(b[1],b[1]+3):
-                thriple.append(alfCad[i])
-            #radix.radixSort(thriple)
-            thriples.append((thriple,b[1]))
-            #print(thriple)
-            thriple=[]
-        except:
-            while(len(thriple)<3):
-                thriple.append(0)
-            thriples.append((thriple,b[1]))
-            thriple=[]
+        if(b[1]!=(len(alfCad)-1)):
+            try:
+                for i in range(b[1],b[1]+3):
+                    thriple.append(alfCad[i])
+                #radix.radixSort(thriple)
+                thriples.append((thriple,b[1]))
+                #print(thriple)
+                thriple=[]
+            except:
+                while(len(thriple)<3):
+                    thriple.append(0)
+                thriples.append((thriple,b[1]))
+                thriple=[]
     print("----Thriples-----")
     print(thriples)
 
@@ -93,7 +95,7 @@ def dc3(cad):
     print(thriplesarray)
 
     tableRankThriple=[]
-    lastThr=(0,0)
+    lastThr=(-1,-1)
     currentRank=0
     b12IndexRank={}
     duplicates=False
@@ -118,16 +120,17 @@ def dc3(cad):
     #b0Tuples2=[]
     b0Tuples21=[]
     if(duplicates):
-        newArray=[0]*(len(tableRankThriple)+3)
+        newArray=[0]*(len(tableRankThriple)+2)
 
         print("----indexRank---")
         print(b12IndexRank)
-        for i in range(0,len(b12)+3):
+        for i in range(0,len(b12)+2):
             try:
                 print(b12[i][1])
                 newArray[i]=b12IndexRank[b12[i][1]]
             except Exception as e:
                 #print(e)
+                print(i)
                 newArray[i]=0
                 continue
         print("array for recursion")
@@ -142,6 +145,7 @@ def dc3(cad):
         #recursive call
             
         recReturn=dc3(st)
+        print("returned")
         print(recReturn)
 
 
@@ -166,7 +170,7 @@ def dc3(cad):
         result=[]
         idx=0
         idx2=0
-        while(idx<len(b0Tuples21)and idx<len(b0Tuples21)):
+        while(idx<len(b0Tuples21)and idx2<len(tableRankThriple)):
             while(idx2<len(tableRankThriple) and idx<len(b0Tuples21)):
                 currentB0=b0Tuples21[idx]
                 idxB0=currentB0[1][1]
@@ -176,7 +180,7 @@ def dc3(cad):
                 #print("idx%3",idxB12%3)
                 if(idxB12%3==2):
                     charB12=alfCad[idxB12]
-                    charB0=alfCad[idxB12]
+                    charB0=alfCad[idxB0]
                     #print(charB12,charB0)
                     if(charB0>charB12):
                         result.append(idxB12)
@@ -208,7 +212,7 @@ def dc3(cad):
                     currentB12=tableRankThriple[idx2]
                     idxB12=currentB12[0][1]
                     charB12=alfCad[idxB12]
-                    charB0=alfCad[idxB12]
+                    charB0=alfCad[idxB0]
                     #print("charB0",charB0)
                     print("charB0-charB12",charB12,charB0)
                     if(charB0>charB12):
@@ -230,6 +234,17 @@ def dc3(cad):
                             idx=idx+1
                         else:
                             print(recReturn)
+            print("----indices finales-----------",idx,idx2)
+            if(idx==len(tableRankThriple)and idx2!=len(b0Tuples21)):
+                for i in range(idx,len(b0Tuples21)):
+                    currentB0=b0Tuples21[i]
+                    idxB0=currentB0[1][1]
+                    result.append(idxB0)
+            elif(idx!=len(tableRankThriple)and idx2==len(b0Tuples21)):
+                for i in range(idx2,len(tableRankThriple)):
+                    currentB12=tableRankThriple[i]
+                    idxB12=currentB12[0][1]
+                    result.append(idxB12)
                 else:
                     print("alo")
             #if(idx2==len(tableRankThriple) and idx<len(b0Tuples21)):
@@ -239,6 +254,7 @@ def dc3(cad):
     else:
         print("----indexRank---")
         print(b12IndexRank)
+        b0.pop()
         print("---b0---")
         print(b0)
         for b in b0:
@@ -246,7 +262,7 @@ def dc3(cad):
             stringB=str(intB)
             #b0Tuples.append(int(stringB+str(b[0])))
             #b0Tuples2.append((intB,b[0]))
-            b0Tuples21.append((int(stringB+str(b[0])),((intB,b[0]),b[1])))
+            b0Tuples21.append((int(str(b[0])+stringB),((b[0],intB),b[1])))
         #radix.radixSort(b0Tuples)
         #radix.radixSortTuple(b0Tuples2)
         radix.radixSortTuple(b0Tuples21)
@@ -259,18 +275,18 @@ def dc3(cad):
         result=[]
         idx=0
         idx2=0
-        while(idx<len(b0Tuples21)and idx<len(b0Tuples21)):
+        while(idx<len(b0Tuples21)and idx2<len(tableRankThriple)):
             while(idx2<len(tableRankThriple) and idx<len(b0Tuples21)):
                 currentB0=b0Tuples21[idx]
                 idxB0=currentB0[1][1]
                 print(idx,idx2)
                 currentB12=tableRankThriple[idx2]
                 idxB12=currentB12[0][1]
-                #print("idx%3",idxB12%3)
+                print("idx%3",idxB12%3)
                 if(idxB12%3==2):
                     charB12=alfCad[idxB12]
-                    charB0=alfCad[idxB12]
-                    #print(charB12,charB0)
+                    charB0=alfCad[idxB0]
+                    print("charB12-B0",charB12,charB0)
                     if(charB0>charB12):
                         result.append(idxB12)
                         idx2=idx2+1
@@ -280,6 +296,7 @@ def dc3(cad):
                     else:
                         charB12P1=alfCad[idxB12+1]
                         charB0P1=alfCad[idxB0+1]
+                        print("charB12P1-B0P1",charB12P1,charB0P1)
                         if(charB0P1>charB12P1):
                             result.append(idxB12)
                             idx2=idx2+1
@@ -301,7 +318,7 @@ def dc3(cad):
                     currentB12=tableRankThriple[idx2]
                     idxB12=currentB12[0][1]
                     charB12=alfCad[idxB12]
-                    charB0=alfCad[idxB12]
+                    charB0=alfCad[idxB0]
                     #print("charB0",charB0)
                     print("charB0-charB12",charB12,charB0)
                     if(charB0>charB12):
@@ -317,12 +334,23 @@ def dc3(cad):
                         if(rankB0P1>rankB12P1):
                             result.append(idxB12)
                             idx2=idx2+1
+                            print("verifySize",idx2,len(tableRankThriple))
                         elif(rankB0P1<rankB12P1):
                             print("idxB0",idxB0)
                             result.append(idxB0)
                             idx=idx+1
                         else:
                             print("alo")
+            if(idx==len(tableRankThriple)and idx2!=len(b0Tuples21)):
+                for i in range(idx,len(b0Tuples21)):
+                    currentB0=b0Tuples21[i]
+                    idxB0=currentB0[1][1]
+                    result.append(idxB0)
+            elif(idx!=len(tableRankThriple)and idx2==len(b0Tuples21)):
+                for i in range(idx2,len(tableRankThriple)):
+                    currentB12=tableRankThriple[i]
+                    idxB12=currentB12[0][1]
+                    result.append(idxB12)
                 else:
                     print("alo")
             #if(idx2==len(tableRankThriple) and idx<len(b0Tuples21)):
