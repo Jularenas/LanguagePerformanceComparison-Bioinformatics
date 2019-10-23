@@ -2,31 +2,39 @@ import radix
 
 def dc3(cad):
     #cadena
-
+    print("--------Cadena--------")
+    print("--------Cadena--------",cad)
+    print("--------Cadena--------")
     #construcción de alfabeto
 
+    
     alf=[]
-
     for c in cad:
         alf.append(ord(c))
-    print(alf)
+    #print(alf)
 
     radix.radixSort(alf)
 
-    print(alf)
-
-    index=0
-    lastChar=-1
+    #print(alf)
     alfDict={}
-    for a in alf:
-        if(a != lastChar):
-            index+=1
-            alfDict[chr(a)]=index
-        lastChar=a
-    print(alfDict)
-            
+    try:
+        float(cad)
+        for a in alf:
+            alfDict[chr(a)]=int(chr(a))
+        print(alfDict)
+    except:
+        index=0
+        lastChar=-1
+        for a in alf:
+            if(a != lastChar):
+                index+=1
+                alfDict[chr(a)]=index
+            lastChar=a
+        print(alfDict)
+                
     alfCad=[]
     for c in cad:
+        print(c)
         alfCad.append(alfDict[c])
     print(alfCad)
 
@@ -94,16 +102,21 @@ def dc3(cad):
             currentRank=currentRank+1
             tableRankThriple.append((thr,currentRank))
             b12IndexRank[thr[1]]=currentRank
-            duplicates=True
         else:
             tableRankThriple.append((thr,currentRank))
             b12IndexRank[thr[1]]=currentRank
+            duplicates=True
         lastThr=thr
+    b12IndexRank[len(cad)]=0
+    b12IndexRank[len(cad)+1]=0
+    b12IndexRank[len(cad)+2]=0
     print("-----")
     print("-----")
     print("--Table Rank thriple--")
     print(tableRankThriple)
-    b0Tuples=[]
+    #b0Tuples=[]
+    #b0Tuples2=[]
+    b0Tuples21=[]
     if(duplicates):
         newArray=[0]*(len(tableRankThriple)+3)
 
@@ -119,14 +132,204 @@ def dc3(cad):
                 continue
         print("array for recursion")
         print(newArray)
+        
         st=''
         for a in newArray:
             st+=str(a)
-        #dc3(st)
-    else:
+
+
+
+        #recursive call
+            
+        recReturn=dc3(st)
+        print(recReturn)
+
+
+            
+        print("---b0---")
+        print(b0)
         for b in b0:
-            b0Tuples.append((b[0],b12IndexRank[(b[1]+1)]))
-        radix.radixSortTuple(b0tuples)
+            intB=b12IndexRank[(b[1]+1)]
+            stringB=str(intB)
+            #b0Tuples.append(int(stringB+str(b[0])))
+            #b0Tuples2.append((intB,b[0]))
+            b0Tuples21.append((int(stringB+str(b[0])),((intB,b[0]),b[1])))
+        #radix.radixSort(b0Tuples)
+        #radix.radixSortTuple(b0Tuples2)
+        radix.radixSortTuple(b0Tuples21)
+        
+        print("---b0Sorted--")
+        #print(b0Tuples)
+        #print(b0Tuples2)
+        print(b0Tuples21)
+
+        result=[]
+        idx=0
+        idx2=0
+        while(idx<len(b0Tuples21)and idx<len(b0Tuples21)):
+            while(idx2<len(tableRankThriple) and idx<len(b0Tuples21)):
+                currentB0=b0Tuples21[idx]
+                idxB0=currentB0[1][1]
+                print(idx,idx2)
+                currentB12=tableRankThriple[idx2]
+                idxB12=currentB12[0][1]
+                #print("idx%3",idxB12%3)
+                if(idxB12%3==2):
+                    charB12=alfCad[idxB12]
+                    charB0=alfCad[idxB12]
+                    #print(charB12,charB0)
+                    if(charB0>charB12):
+                        result.append(idxB12)
+                        idx2=idx2+1
+                    elif(charB0<charB12):
+                        result.append(idxB0)
+                        idx=idx+1
+                    else:
+                        charB12P1=alfCad[idxB12+1]
+                        charB0P1=alfCad[idxB0+1]
+                        if(charB0P1>charB12P1):
+                            result.append(idxB12)
+                            idx2=idx2+1
+                        elif(charB0P1<charB12P1):
+                            result.append(idxB0)
+                            idx=idx+1
+                        else:
+                            rankB0P2=b12IndexRank[idxB0+2]
+                            rankB12P2=b12IndexRank[idxB12+2]
+                            if(rankB0P2>rankB12P2):
+                                result.append(idxB12)
+                                idx2=idx2+1
+                            elif(rankB0P2<rankB12P2):
+                                result.append(idxB0)
+                                idx=idx+1
+                            else:
+                                print("error")
+                elif(idxB12%3==1):
+                    currentB12=tableRankThriple[idx2]
+                    idxB12=currentB12[0][1]
+                    charB12=alfCad[idxB12]
+                    charB0=alfCad[idxB12]
+                    #print("charB0",charB0)
+                    print("charB0-charB12",charB12,charB0)
+                    if(charB0>charB12):
+                        result.append(idxB12)
+                        idx2=idx2+1
+                    elif(charB0<charB12):
+                        result.append(idxB0)
+                        idx=idx+1
+                    else:
+                        rankB0P1=b12IndexRank[idxB0+1]
+                        rankB12P1=b12IndexRank[idxB12+1]
+                        print("rankB0-rankrB12",rankB0P1,rankB12P1)
+                        if(rankB0P1>rankB12P1):
+                            result.append(idxB12)
+                            idx2=idx2+1
+                        elif(rankB0P1<rankB12P1):
+                            print("idxB0",idxB0)
+                            result.append(idxB0)
+                            idx=idx+1
+                        else:
+                            print(recReturn)
+                else:
+                    print("alo")
+            #if(idx2==len(tableRankThriple) and idx<len(b0Tuples21)):
+            #    break
+        print(result)
+        return(result)
+    else:
+        print("----indexRank---")
+        print(b12IndexRank)
+        print("---b0---")
+        print(b0)
+        for b in b0:
+            intB=b12IndexRank[(b[1]+1)]
+            stringB=str(intB)
+            #b0Tuples.append(int(stringB+str(b[0])))
+            #b0Tuples2.append((intB,b[0]))
+            b0Tuples21.append((int(stringB+str(b[0])),((intB,b[0]),b[1])))
+        #radix.radixSort(b0Tuples)
+        #radix.radixSortTuple(b0Tuples2)
+        radix.radixSortTuple(b0Tuples21)
+        
+        print("---b0Sorted--")
+        #print(b0Tuples)
+        #print(b0Tuples2)
+        print(b0Tuples21)
+        
+        result=[]
+        idx=0
+        idx2=0
+        while(idx<len(b0Tuples21)and idx<len(b0Tuples21)):
+            while(idx2<len(tableRankThriple) and idx<len(b0Tuples21)):
+                currentB0=b0Tuples21[idx]
+                idxB0=currentB0[1][1]
+                print(idx,idx2)
+                currentB12=tableRankThriple[idx2]
+                idxB12=currentB12[0][1]
+                #print("idx%3",idxB12%3)
+                if(idxB12%3==2):
+                    charB12=alfCad[idxB12]
+                    charB0=alfCad[idxB12]
+                    #print(charB12,charB0)
+                    if(charB0>charB12):
+                        result.append(idxB12)
+                        idx2=idx2+1
+                    elif(charB0<charB12):
+                        result.append(idxB0)
+                        idx=idx+1
+                    else:
+                        charB12P1=alfCad[idxB12+1]
+                        charB0P1=alfCad[idxB0+1]
+                        if(charB0P1>charB12P1):
+                            result.append(idxB12)
+                            idx2=idx2+1
+                        elif(charB0P1<charB12P1):
+                            result.append(idxB0)
+                            idx=idx+1
+                        else:
+                            rankB0P2=b12IndexRank[idxB0+2]
+                            rankB12P2=b12IndexRank[idxB12+2]
+                            if(rankB0P2>rankB12P2):
+                                result.append(idxB12)
+                                idx2=idx2+1
+                            elif(rankB0P2<rankB12P2):
+                                result.append(idxB0)
+                                idx=idx+1
+                            else:
+                                print("error")
+                elif(idxB12%3==1):
+                    currentB12=tableRankThriple[idx2]
+                    idxB12=currentB12[0][1]
+                    charB12=alfCad[idxB12]
+                    charB0=alfCad[idxB12]
+                    #print("charB0",charB0)
+                    print("charB0-charB12",charB12,charB0)
+                    if(charB0>charB12):
+                        result.append(idxB12)
+                        idx2=idx2+1
+                    elif(charB0<charB12):
+                        result.append(idxB0)
+                        idx=idx+1
+                    else:
+                        rankB0P1=b12IndexRank[idxB0+1]
+                        rankB12P1=b12IndexRank[idxB12+1]
+                        print("rankB0-rankrB12",rankB0P1,rankB12P1)
+                        if(rankB0P1>rankB12P1):
+                            result.append(idxB12)
+                            idx2=idx2+1
+                        elif(rankB0P1<rankB12P1):
+                            print("idxB0",idxB0)
+                            result.append(idxB0)
+                            idx=idx+1
+                        else:
+                            print("alo")
+                else:
+                    print("alo")
+            #if(idx2==len(tableRankThriple) and idx<len(b0Tuples21)):
+            #    break
+        print(result)
+        return result
+                
         
 
 
