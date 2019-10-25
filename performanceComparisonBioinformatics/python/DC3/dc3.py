@@ -160,8 +160,13 @@ def dc3(cad):
         print("pretrans",b12IndexRank)
     
         for i in range(0,len(sortedB12)):
-            b12IndexRank[str(sortedB12[i][1])]=i+1
+            try:
+                b12IndexRank[str(sortedB12[i][1])]=i+1
+            except:
+                continue
         print(b12IndexRank["5"])
+        print("------UpdatedIndexRank------")
+        print(b12IndexRank)
         
 
 
@@ -197,7 +202,8 @@ def dc3(cad):
                 print(idx,idx2)
                 currentB12=sortedB12[idx2]
                 idxB12=currentB12[1]
-                #print("idx%3",idxB12%3)
+                print(idxB12)
+                print("idx%3",idxB12%3)
                 if(idxB12%3==2):
                     charB12=alfCad[idxB12]
                     charB0=alfCad[idxB0]
@@ -230,13 +236,11 @@ def dc3(cad):
                             else:
                                 print("error")
                 elif(idxB12%3==1):
-                    currentB12=tableRankThriple[idx2]
-                    idxB12=currentB12[0][1]
                     charB12=alfCad[idxB12]
                     charB0=alfCad[idxB0]
                     #print("charB0",charB0)
                     print("charB0-charB12",charB0,charB12)
-                    print("idxB12",idxB12)
+                    print("idxB0",idxB0,"idxB12",idxB12)
                     if(charB0>charB12):
                         result.append(idxB12)
                         idx2=idx2+1
@@ -394,7 +398,7 @@ def dc3(cad):
 
 
 
-cad1='ATTTAGGATT'
+cad1='yabbadabbado'
 sa=dc3(cad1)
 for s in sa:
     print(s,cad1[s:len(cad1)])
