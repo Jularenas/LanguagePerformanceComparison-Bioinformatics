@@ -190,13 +190,13 @@ def dc3(cad):
         result=[]
         idx=0
         idx2=0
-        while(idx<len(b0Tuples21)and idx2<len(tableRankThriple)):
-            while(idx2<len(tableRankThriple) and idx<len(b0Tuples21)):              
+        while(idx<len(b0Tuples21)and idx2<len(sortedB12)):
+            while(idx2<len(sortedB12) and idx<len(b0Tuples21)):              
                 currentB0=b0Tuples21[idx]
                 idxB0=currentB0[1][1]
                 print(idx,idx2)
-                currentB12=tableRankThriple[idx2]
-                idxB12=currentB12[0][1]
+                currentB12=sortedB12[idx2]
+                idxB12=currentB12[1]
                 #print("idx%3",idxB12%3)
                 if(idxB12%3==2):
                     charB12=alfCad[idxB12]
@@ -236,6 +236,7 @@ def dc3(cad):
                     charB0=alfCad[idxB0]
                     #print("charB0",charB0)
                     print("charB0-charB12",charB0,charB12)
+                    print("idxB12",idxB12)
                     if(charB0>charB12):
                         result.append(idxB12)
                         idx2=idx2+1
@@ -393,5 +394,7 @@ def dc3(cad):
 
 
 
-cad1='YABBADABBADO'
-dc3(cad1)
+cad1='ATTTAGGATT'
+sa=dc3(cad1)
+for s in sa:
+    print(s,cad1[s:len(cad1)])
