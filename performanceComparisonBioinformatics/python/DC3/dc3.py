@@ -1,3 +1,4 @@
+import pdb
 import radix
 
 specialChar='0'
@@ -7,7 +8,7 @@ def dc3(cad):
     print("--------Cadena--------")
     print("--------Cadena--------",cad)
     print("--------Cadena--------")
-    #construcción de alfabeto
+    #construccion de alfabeto
     
     alf=[]
     for c in cad:
@@ -135,7 +136,6 @@ def dc3(cad):
                 continue
         print("array for recursion")
         print(newArray)
-        
         st=''
         for a in newArray:
             st+=str(a)
@@ -156,26 +156,33 @@ def dc3(cad):
             sortedB12[i-1]=b12Val
 
         print("sortedB12",sortedB12)
+
+        print("pretrans",b12IndexRank)
+    
         for i in range(0,len(sortedB12)):
-            b12IndexRank[str(sortedB12[i])]=i+1
+            b12IndexRank[str(sortedB12[i][1])]=i+1
+        print(b12IndexRank["5"])
+        
 
 
 
-        print(b12IndexRank) 
+        print("posTrans",b12IndexRank) 
         print("---b0---")
         print(b0)
         for b in b0:
             intB=b12IndexRank[str((b[1]+1))]
+            print(intB,str((b[1]+1)))
             stringB=str(intB)
             #b0Tuples.append(int(stringB+str(b[0])))
             #b0Tuples2.append((intB,b[0]))
             #print(stringB)
-            b0Tuples21.append((int(stringB+str(b[0])),((intB,b[0]),b[1])))
+            b0Tuples21.append((int(str(b[0])+stringB),((b[0],intB),b[1])))
         #radix.radixSort(b0Tuples)
         #radix.radixSortTuple(b0Tuples2)
-        radix.radixSortTuple(b0Tuples21)
-        
+        print("---b0unSorted--")
+        print(b0Tuples21)
         print("---b0Sorted--")
+        radix.radixSortTuple(b0Tuples21)
         #print(b0Tuples)
         #print(b0Tuples2)
         print(b0Tuples21)
@@ -184,7 +191,7 @@ def dc3(cad):
         idx=0
         idx2=0
         while(idx<len(b0Tuples21)and idx2<len(tableRankThriple)):
-            while(idx2<len(tableRankThriple) and idx<len(b0Tuples21)):
+            while(idx2<len(tableRankThriple) and idx<len(b0Tuples21)):              
                 currentB0=b0Tuples21[idx]
                 idxB0=currentB0[1][1]
                 print(idx,idx2)
@@ -198,6 +205,7 @@ def dc3(cad):
                     if(charB0>charB12):
                         result.append(idxB12)
                         idx2=idx2+1
+                        print("bien")
                     elif(charB0<charB12):
                         result.append(idxB0)
                         idx=idx+1
@@ -227,7 +235,7 @@ def dc3(cad):
                     charB12=alfCad[idxB12]
                     charB0=alfCad[idxB0]
                     #print("charB0",charB0)
-                    print("charB0-charB12",charB12,charB0)
+                    print("charB0-charB12",charB0,charB12)
                     if(charB0>charB12):
                         result.append(idxB12)
                         idx2=idx2+1
@@ -247,19 +255,23 @@ def dc3(cad):
                             idx=idx+1
                         else:
                             print(recReturn)
-            print("----indices finales-----------",idx,idx2)
-            if(idx==len(tableRankThriple)and idx2!=len(b0Tuples21)):
-                for i in range(idx,len(b0Tuples21)):
-                    currentB0=b0Tuples21[i]
-                    idxB0=currentB0[1][1]
-                    result.append(idxB0)
-            elif(idx!=len(tableRankThriple)and idx2==len(b0Tuples21)):
-                for i in range(idx2,len(tableRankThriple)):
-                    currentB12=tableRankThriple[i]
-                    idxB12=currentB12[0][1]
-                    result.append(idxB12)
-                else:
-                    print("alo")
+            pdb.set_trace()
+        #DeadCode?
+        print("aaaaaaaaaaaa")
+        
+        print("----indices finales-----------",idx,idx2)
+            
+        if(idx>=len(tableRankThriple)and idx2!=len(b0Tuples21)):
+            for i in range(idx,len(b0Tuples21)):
+                currentB0=b0Tuples21[i]
+                idxB0=currentB0[1][1]
+                result.append(idxB0)
+        elif(idx!=len(tableRankThriple)and idx2>=len(b0Tuples21)):
+            print("---HELP--")
+            for i in range(idx2,len(tableRankThriple)):
+                currentB12=tableRankThriple[i]
+                idxB12=currentB12[0][1]
+                result.append(idxB12)
             #if(idx2==len(tableRankThriple) and idx<len(b0Tuples21)):
             #    break
         print(result)
@@ -333,7 +345,7 @@ def dc3(cad):
                     charB12=alfCad[idxB12]
                     charB0=alfCad[idxB0]
                     #print("charB0",charB0)
-                    print("charB0-charB12",charB12,charB0)
+                    print("charB0-charB12",charB0,charB12)
                     if(charB0>charB12):
                         result.append(idxB12)
                         idx2=idx2+1
@@ -354,20 +366,26 @@ def dc3(cad):
                             idx=idx+1
                         else:
                             print("alo")
-            if(idx==len(tableRankThriple)and idx2!=len(b0Tuples21)):
-                for i in range(idx,len(b0Tuples21)):
-                    currentB0=b0Tuples21[i]
-                    idxB0=currentB0[1][1]
-                    result.append(idxB0)
-            elif(idx!=len(tableRankThriple)and idx2==len(b0Tuples21)):
-                for i in range(idx2,len(tableRankThriple)):
-                    currentB12=tableRankThriple[i]
-                    idxB12=currentB12[0][1]
-                    result.append(idxB12)
-                else:
-                    print("alo")
+           
+        print("aaaaaaaaaaaa")
+        
+        print("----indices finales-----------",idx,idx2)
+            
+        if(idx>=len(tableRankThriple)and idx2!=len(b0Tuples21)):
+            for i in range(idx,len(b0Tuples21)):
+                currentB0=b0Tuples21[i]
+                idxB0=currentB0[1][1]
+                result.append(idxB0)
+        elif(idx!=len(tableRankThriple)and idx2>=len(b0Tuples21)):
+            print("---HELP--")
+            for i in range(idx2,len(tableRankThriple)):
+                currentB12=tableRankThriple[i]
+                idxB12=currentB12[0][1]
+                result.append(idxB12)
             #if(idx2==len(tableRankThriple) and idx<len(b0Tuples21)):
             #    break
+        print(result)
+        return(result)
         print(result)
         return result
                 
