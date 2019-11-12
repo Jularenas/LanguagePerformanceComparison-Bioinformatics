@@ -92,7 +92,7 @@ function dc3(cad){
 			}
 		}
 	console.log(alfDict);
-	alfCad=[];
+	var alfCad=[];
 	for(var i=0;i<cad.length;i++){
 		alfCad.push(alfDict[cad.charAt(i)]);
 	}
@@ -124,7 +124,7 @@ function dc3(cad){
 	
 	console.log(b12);
 	
-	thriples=[];
+	var thriples=[];
 	for(var i=0;i<b12.length;i++){
 		var thriple=[];
 		var currentb=b12[i];
@@ -144,7 +144,7 @@ function dc3(cad){
 	}
 	console.log(thriples);
 	
-	thriplesArray=[];
+	var thriplesArray=[];
 	
 	for(var i=0;i<thriples.length;i++){
 		var thrip='';
@@ -191,7 +191,7 @@ function dc3(cad){
 	
 	//console.log(tableRankThriple);
 	
-	b0Tuples21=[];
+	var b0Tuples21=[];
 	console.log(duplicates);
 	if(duplicates){
 		newArray=new Array(tableRankThriple.length+2);
@@ -222,19 +222,31 @@ function dc3(cad){
 			sortedB12[i-1]=b12Val;
 		}
 		
-		for(var i=0;i<sortedB12;i++){
+		console.log("-------IndexRankOld-------")
+		console.log(b12IndexRank);
+		for(var i=0;i<sortedB12.length;i++){
+			console.log(sortedB12[i][1].toString());
 			b12IndexRank[sortedB12[i][1].toString()]=i+1;
 		}
 		console.log("-------updatedIndexRank------")
 		console.log(b12IndexRank);
 		
 		
-		for(var i=0;i<b0.length;i++){
-			var intB=b12IndexRank[(b0[i][1]+1).toString()];
-			stringB=intB.toString();
-			b0Tuples21.push([parseInt((b0[i][0]).toString()+stringB),[[b0[i][0],intB],b0[i][1]]]);
+		console.log("--------b0-------");
+		console.log(b0);
+		
+		for(var j=0;j<b0.length;j++){
+			var intB=b12IndexRank[(b0[j][1]+1).toString()];
+			var stringB=intB.toString();
+			console.log([intB,(b0[j][1]+1).toString()]);
+			console.log(j)
+			b0Tuples21.push([parseInt(((b0[j][0]).toString())+stringB),[ [b0[j][0],intB],b0[j][1] ]]);
 		}
+		console.log("------b0unsorted------");
+		console.log(b0Tuples21);
 		b0Tuples21=radixSortTuple(b0Tuples21);
+		console.log("------b0sorted------");
+		console.log(b0Tuples21);
 		
 		var result=[];
 		var idx=0;
@@ -242,13 +254,18 @@ function dc3(cad){
 		
 		while(idx<b0Tuples21.length && idx2<sortedB12.length){
 			while(idx2<sortedB12.length && idx<b0Tuples21.length){
+				//console.log("idx",idx)
+				//console.log("idx2",idx2)
 				var currentB0=b0Tuples21[idx];
 				var idxB0=currentB0[1][1];
 				var currentB12=sortedB12[idx2];
                 var idxB12=currentB12[1];
+				//console.log(idxB12);
 				if(idxB12%3==2){
-					charB12=alfCad[idxB12];
-                    charB0=alfCad[idxB0];
+					var charB12=alfCad[idxB12];
+                    var charB0=alfCad[idxB0];
+					//console.log(charB12);
+					//console.log(charB0);
                     if(charB0>charB12){
                         result.push(idxB12);
                         idx2=idx2+1;
@@ -258,8 +275,8 @@ function dc3(cad){
                         idx=idx+1;	
 					}
                     else{
-						charB12P1=alfCad[idxB12+1];
-                        charB0P1=alfCad[idxB0+1];
+						var charB12P1=alfCad[idxB12+1];
+                        var charB0P1=alfCad[idxB0+1];
                         if(charB0P1>charB12P1){
                             result.push(idxB12);
                             idx2=idx2+1	;
@@ -269,8 +286,10 @@ function dc3(cad){
                             idx=idx+1;
 						}
                         else{
-							rankB0P2=b12IndexRank[(idxB0+2).toString];
-                            rankB12P2=b12IndexRank[(idxB12+2).toString];
+							var rankB0P2=b12IndexRank[(idxB0+2).toString()];
+                            var rankB12P2=b12IndexRank[(idxB12+2).toString()];
+							console.log(idxB0+2);
+							console.log(idxB12+2);
                             if(rankB0P2>rankB12P2){
                                 result.push(idxB12);
                                 idx2=idx2+1;
@@ -283,8 +302,8 @@ function dc3(cad){
 					}   
 				}
 				else if(idxB12%3==1){
-					charB12=alfCad[idxB12];
-                    charB0=alfCad[idxB0];
+					var charB12=alfCad[idxB12];
+                    var charB0=alfCad[idxB0];
                     if(charB0>charB12){
                         result.push(idxB12);
                         idx2=idx2+1;
@@ -294,8 +313,8 @@ function dc3(cad){
                         idx=idx+1;
 					}
                     else{
-						rankB0P1=b12IndexRank[(idxB0+1).toString()];
-                        rankB12P1=b12IndexRank[(idxB12+1).toString()];
+						var rankB0P1=b12IndexRank[(idxB0+1).toString()];
+                        var rankB12P1=b12IndexRank[(idxB12+1).toString()];
                         if(rankB0P1>rankB12P1){
                             result.push(idxB12);
                             idx2=idx2+1	;
@@ -312,15 +331,15 @@ function dc3(cad){
 		
 		if(idx>=tableRankThriple.length && idx2!=b0Tuples21.length){
 			for (var i=idx;i<b0Tuples21.length;i++){
-				currentB0=b0Tuples21[i];
-                idxB0=currentB0[1][1];
+				var currentB0=b0Tuples21[i];
+                var idxB0=currentB0[1][1];
                 result.push(idxB0);	
 			}
 		}
         else if(idx!=tableRankThriple.length && idx2>=b0Tuples21.length){
 			for(var i=idx2;i<tableRankThriple.length;i++){
-				currentB12=tableRankThriple[i];
-                idxB12=currentB12[0][1];
+				var currentB12=tableRankThriple[i];
+                var idxB12=currentB12[0][1];
                 result.push(idxB12);
 			}
 		}
@@ -433,4 +452,4 @@ function dc3(cad){
 var cadena="yabbadabbado"
 
 var res=dc3(cadena);
-//console.log(res);
+console.log(res);
