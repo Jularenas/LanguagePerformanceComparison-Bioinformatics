@@ -181,7 +181,7 @@ def dc3(cad):
             #b0Tuples.append(int(stringB+str(b[0])))
             #b0Tuples2.append((intB,b[0]))
             #print(stringB)
-            b0Tuples21.append((int(str(b[0])+stringB),((b[0],intB),b[1])))
+            b0Tuples21.append((int(str(b[0])+stringB),( (b[0],intB),b[1]) ) )
         #radix.radixSort(b0Tuples)
         #radix.radixSortTuple(b0Tuples2)
         print("---b0unSorted--")
@@ -260,7 +260,7 @@ def dc3(cad):
                             idx=idx+1
                         else:
                             print(recReturn)
-            pdb.set_trace()
+            #pdb.set_trace()
         #DeadCode?
         print("aaaaaaaaaaaa")
         
